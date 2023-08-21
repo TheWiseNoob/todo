@@ -6,6 +6,7 @@ This is a small todo list web app using Laravel and Vue.
 - Apache or nginx server
 - PHP
 - npm
+- composer
 
 ### Install
 - php artisan migrate
