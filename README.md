@@ -8,6 +8,7 @@ This is a small todo list web app using Laravel and Vue.
 - npm
 
 ### Install
+- php artisan migrate
 - npm Install
 - npm run dev
 
