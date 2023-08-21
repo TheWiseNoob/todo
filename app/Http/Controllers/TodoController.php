@@ -33,12 +33,11 @@ class TodoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $task= $request->task;
-        $task= $request->complete;
+        $completed = $request->completed;
 
         $todo = Todo::findOrFail($id);
 
-        $todo->task = $task;
+        $todo->completed = $completed;
         $todo->save();
 
         return response()->json('success');

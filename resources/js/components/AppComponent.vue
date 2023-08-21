@@ -1,5 +1,5 @@
 <style lang="scss">
-    .todoContainer {
+    #todo-container {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -32,6 +32,7 @@
 
             transition: box-shadow 0.2s linear;
 
+            &:hover,
             &:focus {
                 box-shadow: 0 0 0 4px rgba(220,220,220,1);
             }
@@ -81,11 +82,11 @@
 </style>
 
 <template>
-    <div class="todoContainer">
+    <div id="todo-container">
         <h1>Todo List</h1>
 
         <form
-            id="todoForm"
+            id="todo-form"
             @submit="createTodo"
         >
             <input
@@ -100,7 +101,12 @@
 
         <div>
             <div class="todo" v-for="(todo, todoIndex) in todos">
-                <input class="todo-checkbox" type="checkbox" :checked="todo.completed">
+                <input
+                    class="todo-checkbox"
+                    type="checkbox"
+                    :checked="todo.completed"
+                    @change="updateTodo($event, todo.id, todoIndex)"
+                >
 
                 <div class="todo-text">
                     {{ todo.task }}
@@ -139,6 +145,8 @@
         },
 
         methods: {
+
+            // Create todo item.
             createTodo (event) {
                 const task = this.task;
                 this.task = '';
@@ -152,12 +160,23 @@
                        completed: response.data.completed
                    })));
             },
-            deleteTodo (id, todoIndex) {
-                console.log('todoIndex' + todoIndex);
 
+            // Delete todo item.
+            deleteTodo (id, todoIndex) {
                 axios.delete(`api/todos/${id}`)
                    .then(response => {
                        this.todos.splice(todoIndex, 1);
+                   });
+            },
+
+            // Mark todo item as checked.
+            updateTodo(event, id, todoIndex) {
+                const checked = event.currentTarget.checked;
+
+                this.todos[todoIndex].completed = checked;
+
+                axios.put(`api/todos/${id}`, {completed: checked})
+                   .then(response => {
                    });
             },
         }
