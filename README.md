@@ -10,3 +10,6 @@ This is a small todo list web app using Laravel and Vue.
 ### Install
 - npm Install
 - npm run dev
+
+
+![alt text](https://github.com/TheWiseNoob/todo/blob/main/public/screenshot.png?raw=true)
