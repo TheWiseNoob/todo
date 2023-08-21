@@ -23,9 +23,9 @@ class TodoController extends Controller
     public function store(Request $request)
     {
         $task = $request->task;
-        Todo::create(['task' => $task]);
+        $newTodo = Todo::create(['task' => $task]);
 
-        return response()->json('success');
+        return response()->json($newTodo);
     }
 
     /**
@@ -34,6 +34,7 @@ class TodoController extends Controller
     public function update(Request $request, string $id)
     {
         $task= $request->task;
+        $task= $request->complete;
 
         $todo = Todo::findOrFail($id);
 

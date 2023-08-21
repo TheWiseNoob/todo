@@ -39,11 +39,12 @@
 
         .todo {
             display: flex;
+            align-items: center;
 
             min-width: 150px;
 
             margin: 12px;
-            padding: 5px;
+            padding: 5px 10px;
 
             background-color: white;
 
@@ -54,6 +55,27 @@
 
             font-size: 15px;
             font-family: 'Open Sans', sans-serif;
+
+            .todo-checkbox:checked + .todo-text {
+                 text-decoration: line-through;
+             }
+
+            .todo-text {
+                flex-grow: 1;
+
+                margin-left: 10px;
+            }
+
+            .todo-close-button {
+                margin-left: 10px;
+
+                background-color: transparent;
+
+                border: 2px solid rgba(130,130,130,0);
+
+                color: rgba(70,70,70,1);
+                font-size: 18px;
+            }
         }
     }
 </style>
@@ -77,8 +99,20 @@
         </form>
 
         <div>
-            <div class="todo" v-for="todo in todos">
-                {{ todo.task }}
+            <div class="todo" v-for="(todo, todoIndex) in todos">
+                <input class="todo-checkbox" type="checkbox" :checked="todo.completed">
+
+                <div class="todo-text">
+                    {{ todo.task }}
+                </div>
+
+                <button
+                    class="todo-close-button"
+                    type="button"
+                    @click="deleteTodo(todo.id, todoIndex)"
+                >
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
         </div>
     </div>
@@ -112,8 +146,20 @@
                 event.preventDefault();
 
                 axios.post('api/todos', {task: task})
-                   .then(response => (this.todos.push({task: task})))
-            }
+                   .then(response => (this.todos.push({
+                       task: task,
+                       id: response.data.id,
+                       completed: response.data.completed
+                   })));
+            },
+            deleteTodo (id, todoIndex) {
+                console.log('todoIndex' + todoIndex);
+
+                axios.delete(`api/todos/${id}`)
+                   .then(response => {
+                       this.todos.splice(todoIndex, 1);
+                   });
+            },
         }
     }
 </script>

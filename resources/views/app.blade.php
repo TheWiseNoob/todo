@@ -9,7 +9,9 @@
         <!-- Fonts -->
         <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
         <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     </head>
+
     <body class="antialiased">
         <div id="app">
             <app-component></app-component>
