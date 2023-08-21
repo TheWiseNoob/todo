@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('todos', function (Blueprint $table) {
             $table->id();
 
-            $table->text('task');
+            $table->string('task', 50);
             $table->boolean('completed')->default(false);
 
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
